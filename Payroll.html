@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <header>Javascript Payroll</header>
+        <br>
+        <title>Payroll System</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+        <style>
+            header{
+                font-family: 'raleway', sans-serif; 
+                font-size: 40px;
+                text-align:  center;
+                
+            }
+            .container{
+                overflow: hidden}
+            .tab{
+                float: left;}
+            .tab-2{
+                margin-left: 370px}
+            .tab-2 input{
+                display: block;margin-bottom: 10px}
+            tr{
+                transition:all .25s ease-in-out}
+            tr:hover{
+                background-color:#EEE;cursor: pointer}
+            #table{
+                border: 1px solid #dddddd;
+
+                
+            }
+            td,  tr{
+                text-align: center;
+                border-collapse: collapse;
+            }
+            #row{
+                border-collapse: collapse;
+            }
+            tr:nth-child(even){
+                background-color: #e6e6ff;
+            }
+            tr:nth-child(odd){
+                background-color:  #f2f2f2;
+
+            }
+
+
+            
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="tab tab-2">
+                    <fieldset>
+                            <legend> &nbsp Input Data &nbsp</legend>
+                            
+                            <div class= "inputs">
+    
+                
+                                    First name 
+                                    <br>
+                                    <input type="text" id="Fname">
+                                    <br>
+                                
+                                    Last name 
+                                    <br>
+                                    <input type="text" id="Lname">
+                                    <br>
+                
+                                    Hours Worked 
+                                    <br>
+                                    <input type="number" id="hWork">
+                                    <br>
+
+                                    Rate per Hour
+                                    <br>
+                                    <input type="number" id="rate">
+                                    <br>
+                                    
+
+    
+                                    <br>
+                                    <center>
+                                    <button onclick="add();"> &nbsp Add &nbsp</button>
+                                    <button onclick="edit()"> &nbsp Edit &nbsp</button>
+                                    <button onclick="del()"> &nbsp Delete &nbsp</button> </center>
+            </div> </fieldset>
+            <br>
+            <div class="tab tab-1">
+                    <table id="table">
+                        <tr id="Row">
+                            <th>&nbsp&nbspFirst Name&nbsp&nbsp</th>
+                            <th>&nbsp&nbspLast Name&nbsp&nbsp</th>
+                            <th>&nbsp&nbspHours Worked&nbsp&nbsp</th>
+                            <th>&nbsp&nbspRate per Hour (Peso)&nbsp&nbsp</th>
+                            <th>&nbsp&nbspSalary (Peso)&nbsp&nbsp</th>
+                            
+                        </tr>
+                        
+                    </table>
+                </div>
+        </div>
+        
+        <script>
+            
+            var rIndex,
+                table = document.getElementById("table");
+
+            function check()
+            {
+                var isEmpty = false,
+                    Fname = document.getElementById("Fname").value,
+                    Lname = document.getElementById("Lname").value,
+                    Hwork = document.getElementById("hWork").value,
+                    rate = document.getElementById("rate").value;
+
+                if(Lname === ""){
+                    alert("First Name Connot Be Empty");
+                    isEmpty = true;
+                    empty();
+                    
+                }
+                else if(Fname === ""){
+                    alert("Last Name Connot Be Empty");
+                    isEmpty = true;
+                    empty();
+                }
+                else if(Hwork === ""){
+                    alert("Hwork Connot Be Empty");
+                    isEmpty = true;
+                    empty();
+                }
+                else if(rate === ""){
+                    alert("Rate Cannot Be Empty");
+                    isEmpty = true;
+                    empty();
+                }
+
+                else if(rate <=0){
+                    alert("Rate Should not be Less Than 0");
+                    isEmpty = true;
+                    empty();
+                }
+                else if(Hwork <=0){
+                    alert("Hours Worked Cannot be Less Than 0");
+                    isEmpty = true;
+                    empty();
+                }
+
+
+
+                
+                return isEmpty;
+            }
+            
+
+            function add()
+            {
+
+                if(!check()){
+                    var tab = document.getElementById("table"),
+                    row = table.insertRow(table.length),
+                    cell1 = row.insertCell(0),
+                    cell2 = row.insertCell(1),
+                    cell3 = row.insertCell(2),
+                    cell4 = row.insertCell(3),
+                    cell5 = row.insertCell(4),
+                    Fname = document.getElementById("Fname").value,
+                    Lname = document.getElementById("Lname").value,
+                    Hwork = document.getElementById("hWork").value,
+                    rate = document.getElementById("rate").value;
+                    cell1.innerHTML = Fname;
+                    cell2.innerHTML = Lname;
+                    cell3.innerHTML = Hwork;
+                    cell4.innerHTML = rate;
+                    function salary(){
+
+                    work = document.getElementById("hWork").value,
+                    rate = document.getElementById("rate").value,
+                    console.log(work)
+                    console.log(rate)
+                    salary = (work*rate);
+                    cell5.innerHTML = salary;
+                    }
+                    salary(); 
+
+                     alert("Added");
+                     empty();
+                selectedRowToInput();
+                
+            }
+            }
+
+            function selectedRowToInput()
+            {
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                      
+                      rIndex = this.rowIndex;
+                      document.getElementById("Fname").value = this.cells[0].innerHTML;
+                      document.getElementById("Lname").value = this.cells[1].innerHTML;
+                      document.getElementById("hWork").value = this.cells[2].innerHTML;
+                      document.getElementById("rate").value = this.cells[3].innerHTML;
+
+                    };
+                }
+            }
+            selectedRowToInput();
+            
+            function edit()
+            {
+                var Fname = document.getElementById("Fname").value,
+                    Lname = document.getElementById("Lname").value,
+                    Hwork = document.getElementById("hWork").value,
+                    rate = document.getElementById("rate").value;
+                    salary = Hwork*rate;
+               if(!check()){
+                table.rows[rIndex].cells[0].innerHTML = Fname;
+                table.rows[rIndex].cells[1].innerHTML = Lname;
+                table.rows[rIndex].cells[2].innerHTML = Hwork;
+                table.rows[rIndex].cells[3].innerHTML = rate;
+                table.rows[rIndex].cells[4].innerHTML = salary;
+              }
+              alert("Edited")
+            }
+            
+            function del()
+            {
+                table.deleteRow(rIndex);
+
+                document.getElementById("Fname").value = "";
+                document.getElementById("Lname").value = "";
+                document.getElementById("hWork").value = "";
+                document.getElementById("rate").value = "";
+                alert("Deleted")
+            }
+
+            function empty(){
+                document.getElementById("Fname").value = "";
+                document.getElementById("Lname").value = "";
+                document.getElementById("hWork").value = "";
+                document.getElementById("rate").value = "";
+            }
+
+
+        </script>
+        
+    </body>
+</html>
